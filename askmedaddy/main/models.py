@@ -14,11 +14,13 @@ class Comments(models.Model):
     reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank = True)
 
 
-class Post(models.Model):
+class Thread(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(null=True)
-    tags = models.ForeignKey('Tags', on_delete=models.CASCADE, null=True)
+    tags = models.ManyToManyField('Tags')
     comments = models.ForeignKey('Comments', on_delete=models.CASCADE, null=True, blank = True)
     date = models.DateField(auto_now_add=True)
     votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='postVoter')
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    userUpVotes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='threadUpVotes')
+    userDownVotes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='threadDownVotes')
