@@ -22,5 +22,4 @@ class Thread(models.Model):
     date = models.DateField(auto_now_add=True)
     votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='postVoter')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    userUpVotes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='threadUpVotes')
-    userDownVotes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='threadDownVotes')
+    

@@ -5,7 +5,7 @@
 
 {% block content %}
 
-{% for post in posts %}
+{% for post in post %}
 
 <div class="card">
     <div class="card-body">
@@ -13,8 +13,8 @@
         <h1>POSTED BY: {{post.user}}</h1>
         <h1>POST CONTENT: {{post.content}}</h1>
         <h1>POST TAGS: 
-            {% for tagss in post.tags.all %}
-                {{tagss.tagName}}
+            {% for tags in post.tags.all %}
+                {{tags.tagName}}
             {% endfor%}
         </h1>
         <h1>POSTED BY: {{post.user}}</h1>
@@ -24,18 +24,6 @@
 {% endfor %}
 
 
-<div class="vote-buttons">
-    {% ifequal thisUserUpVote 0 %}
-    <img class="vote-up" src = "images/vote-up-off.png" title="Vote this thread UP. (click again to undo)" />
-    {% else %}
-    <img class="vote-up selected" src = "images/vote-up-on.png" title="Vote this thread UP. (click again to undo)" />
-    {% endifequal %}
-    {% ifequal thisUserDownVote 0 %}
-    <img class="vote-down" src = "images/vote-down-off.png" title="Vote this thread DOWN if it is innapropriate or incorrect. (click again to undo)" />
-    {% else %}
-    <img class="vote-down selected" src = "images/vote-down-on.png" title="Vote this thread DOWN if it is innapropriate or incorrect. (click again to undo)" />
-    {% endifequal %}
-</div> <!-- .votebuttons -->
 
 {% endblock content %}
 

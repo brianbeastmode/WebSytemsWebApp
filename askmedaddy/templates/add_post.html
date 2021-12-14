@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="login-box">
+    <h1>Add Post</h1>
+    <form action='add_post' method='POST'>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <input type="text" name="title" class="form-control" placeholder="Title">
+        
+        <label for="formGroupExampleInput" class="form-label">Content:</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Write something!">
+
+        <label for="formGroupExampleInput3" class="form-label">Tags:</label>
+        <select id="formGroupExampleInput3" class="form-select" multiple aria-label="multiple select example">
+          {% for tag in post.tags.all %}
+            <option value="{{tag.tagName}}">{{tag.tagName}}</option>
+          {% endfor %}
+
+        </select>
+        
+
+      </div>
+        
+      <input type="submit" name="signup_submit" value="Submit/Add post" />
+    </form>
+    {% for message in messages %}
+      <h2> {{ message }} </h2>  
+    {% endfor %}
+</div>
+
+{% endblock %}
