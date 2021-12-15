@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Tags, Comments, Thread
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.http import HttpResponseRedirect, HttpResponse
 
-from django.http import HttpResponse
-
+from .models import Tags, Comments, Thread
+from .forms import ThreadForm
+from django.contrib.auth.forms import UserCreationForm
 
 from .decorators import unauthenticated_user, authenticated_user
 
@@ -61,11 +62,35 @@ def login(request):
 
     return render(request, 'login.html')
 
+def signup(request):
 
-def addPost(request):
-    post = Thread.objects.all()
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        f = UserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.success(request, 'Account created successfully')
+            return redirect('signup')
+
+    else:
+        f = UserCreationForm()
+
+    return render(request, 'signup.html', {'form': f})
+
+def addThread(request):
+    submitted = False
+
+    if request.method == 'POST':
+        form = ThreadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add-post?submitted=True')
+    
+    form = ThreadForm
     context = {
-        'post' : post
+        'form' : form
     }
     return render(request, 'add_post.html', context)
 
