@@ -5,6 +5,13 @@
 
 {% block content %}
 
+
+{% if messages %}
+    {% for message in messages %}
+        <p class="alert alert-info">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
 {% for post in post %}
 
 <div class="card">
