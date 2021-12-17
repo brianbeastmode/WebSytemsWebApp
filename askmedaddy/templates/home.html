@@ -16,15 +16,16 @@
 
 <div class="card">
     <div class="card-body">
-        <h1>POST TITLE: {{post.title}}</h1>
+        <h1>POST TITLE: {{post.title}}</h1> <a href='{{post.id}}'>asdas</a>
         <h1>POSTED BY: {{post.user}}</h1>
         <h1>POST CONTENT: {{post.content}}</h1>
         <h1>POST TAGS: 
-            {% for tags in post.tags.all %}
-                {{tags.tagName}}
-            {% endfor%}
+            <h1>{% for tagss in post.tags.all %}
+                {{tagss.tagName}}
+            {% endfor%}<h1>
         </h1>
-        <h1>POSTED BY: {{post.user}}</h1>
+        <h1>DATE: {{post.date}}</h1>
+       
     </div>
 </div>
 

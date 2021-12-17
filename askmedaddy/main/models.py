@@ -24,7 +24,7 @@ class Comments(models.Model):
     content = models.TextField()
     votes = models.ManyToManyField(User, related_name='commentVoter')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank = True)
 
     class Meta:
@@ -34,10 +34,10 @@ class Thread(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(null=True)
     tags = models.ManyToManyField('Tags')
-    comments = models.ForeignKey('Comments', on_delete=models.CASCADE, null=True, blank = True)
+    comments = models.ManyToManyField('Comments')
     votes = models.ManyToManyField(User, related_name='postVoter')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    date = models.DateField(auto_now_add=True)    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank = True)
+    date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = 'Threads'

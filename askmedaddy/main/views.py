@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Tags, Comments, Thread
-from .forms import ThreadForm
+from .forms import ThreadForm, CommentsForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth  import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
@@ -23,9 +23,8 @@ def signup(request):
             form.save()
             messages.success(request, 'Account created successfully')
             return redirect('/')
-        
     else:
-        f = UserCreationForm()
+        form = UserCreationForm()
     context = {
         'form' : form,
     }
@@ -64,8 +63,11 @@ def addThread(request):
     if request.method == 'POST':
         form = ThreadForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/add-post?submitted=True')
+            newform = form.save(commit=False)
+            newform.user = request.user
+            newform.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/?submitted=True')
     
     form = ThreadForm
     context = {
@@ -73,10 +75,26 @@ def addThread(request):
     }
     return render(request, 'add_post.html', context)
 
-
 def home(request):
     post = Thread.objects.all()
     context = {
         'post' : post
     }
     return render(request, 'home.html', context)
+
+def view_post(request, id):
+    post = Thread.objects.get(id=id)
+
+    if request.method == 'POST':
+        form_comment = CommentsForm(request.POST)
+        if form_comment.is_valid():
+            form_comment = form_comment.save(commit=False)
+            form_comment.user = request.user            
+            form_comment.save()
+            return HttpResponseRedirect('{% url %}')
+    form_comment = CommentsForm
+    context = {
+        'post' : post,
+        'form_comment' : form_comment
+    }    
+    return render(request, 'view_post.html', context)

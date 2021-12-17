@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{post.title}}</h1>
+<h1>{{post.content}}</h1>
+<h1>{{post.user}}</h1>
+<br>
+<br>
+{% for comments in post.comments.all%}
+    <h1>{{comments.content}}</h1>
+{% endfor %}
+
+
+<form method = 'post'>
+    {% csrf_token %}
+    {{form_comment.as_p}}
+    <input type="submit" name="signup_submit" value="Sign me up" />
+
+</form>
+
+
+{% endblock %}
