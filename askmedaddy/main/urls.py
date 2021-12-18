@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout', views.logout_request, name = 'logout'),
     path('add-post', views.addThread, name = 'add_post'),
     path('<int:id>/', views.view_post, name = 'view_post'),
+    path('addcomment/<int:id>/', views.addComment, name = 'comment'),
     
 
 

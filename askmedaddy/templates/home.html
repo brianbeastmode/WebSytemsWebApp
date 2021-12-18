@@ -12,19 +12,19 @@
     {% endfor %}
 {% endif %}
 
-{% for post in post %}
+{% for thread in thread %}
 
 <div class="card">
     <div class="card-body">
-        <h1>POST TITLE: {{post.title}}</h1> <a href='{{post.id}}'>asdas</a>
-        <h1>POSTED BY: {{post.user}}</h1>
-        <h1>POST CONTENT: {{post.content}}</h1>
+        <h1>POST TITLE: {{thread.title}}</h1> <a href="{% url 'view_post' thread.id %}">Click me!</a>
+        <h1>POSTED BY: {{thread.user}}</h1>
+        <h1>POST CONTENT: {{thread.content}}</h1>
         <h1>POST TAGS: 
-            <h1>{% for tagss in post.tags.all %}
-                {{tagss.tagName}}
+            <h1>{% for tags in thread.tags.all %}
+                {{tags.tagName}}
             {% endfor%}<h1>
         </h1>
-        <h1>DATE: {{post.date}}</h1>
+        <h1>DATE: {{thread.date}}</h1>
        
     </div>
 </div>

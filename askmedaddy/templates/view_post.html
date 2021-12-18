@@ -2,22 +2,32 @@
 
 {% block content %}
 
-<h1>{{post.title}}</h1>
-<h1>{{post.content}}</h1>
-<h1>{{post.user}}</h1>
+<h1>{{thread.title}}</h1>
+<h1>{{thread.content}}</h1>
+<h1>{{thread.user}}</h1>
 <br>
 <br>
-{% for comments in post.comments.all%}
-    <h1>{{comments.content}}</h1>
-{% endfor %}
 
 
-<form method = 'post'>
+
+<form method = "POST">
     {% csrf_token %}
-    {{form_comment.as_p}}
-    <input type="submit" name="signup_submit" value="Sign me up" />
-
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
 </form>
 
+{% for comments in comments%}
+    <h2>{{comments.content}}</h2>
+    <h4> by {{comments.user}} </h4>
+    <h5>when: {{comments.date}}</h5>
+    {{comments.reply}}
+        {% for reply in comments.reply.all%}
+
+            <h3>{{reply}}</h3>
+        {% endfor %}
+    <br>
+    <br>
+    <br>
+{% endfor %}
 
 {% endblock %}

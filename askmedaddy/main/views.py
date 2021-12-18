@@ -76,25 +76,57 @@ def addThread(request):
     return render(request, 'add_post.html', context)
 
 def home(request):
-    post = Thread.objects.all()
+    thread = Thread.objects.all()
     context = {
-        'post' : post
+        'thread' : thread
     }
     return render(request, 'home.html', context)
 
+@login_required
 def view_post(request, id):
-    post = Thread.objects.get(id=id)
+    thread = Thread.objects.get(id=id)
+    comments = Comments.objects.filter(thread_id=id)
+    form = CommentsForm
 
-    if request.method == 'POST':
-        form_comment = CommentsForm(request.POST)
-        if form_comment.is_valid():
-            form_comment = form_comment.save(commit=False)
-            form_comment.user = request.user            
-            form_comment.save()
-            return HttpResponseRedirect('{% url %}')
-    form_comment = CommentsForm
+    if request.method == "POST":
+        form = CommentsForm(request.POST or None)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.user = request.user
+            data.thread = thread
+            data.save()
+            print("success")
+            return redirect(view_post, thread.id)
+        else:
+            print("form is invalid")
+            return redirect(view_post, thread.id) 
+    else:
+        form = CommentsForm()   
+
     context = {
-        'post' : post,
-        'form_comment' : form_comment
+        'thread' : thread,
+        'comments' : comments,
+        'form' : form
     }    
     return render(request, 'view_post.html', context)
+
+
+def addComment(request, id):
+    thread = Thread.objects.get(id=id)
+
+    if request.method == "POST":
+        form = CommentsForm(request.POST or None)
+        if form.is_valid():
+            print(form)
+            data = form.save(commit=False)
+            data.content = request.POST["comment"]
+            data.user = request.user
+            data.thread = thread
+            data.save()
+            print("success")
+            return redirect(view_post, thread.id)
+        else:
+            print("form is invalid")
+            return redirect(view_post, thread.id) 
+    else:
+        form = CommentsForm()   
