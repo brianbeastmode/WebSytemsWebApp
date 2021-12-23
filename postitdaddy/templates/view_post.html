@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+{% block content %}
+
+<h1>{{threads.title}}</h1>
+<h1>{{threads.content}}</h1>
+<h1>{{threads.user}}</h1>
+<h2>Read times: {% get_hit_count for threads %}</h2>
+<br>
+<br>
+
+
+
+<form method = "POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+{% for comments in comments%}
+    <h2>{{comments.content}}</h2>
+    <h4> by {{comments.user}} </h4>
+    <h5>when: {{comments.date}}</h5>
+    <a href="{% url 'reply' thread.id %}">Reply</a>
+    <div style="margin-left: 200px;">
+    {% for replies in reply %}
+        <h3>{{replies.content|safe}}</h2>
+        <h5> by {{replies.user}} </h4>
+        <h6>when: {{replies.date}}</h5>
+    {% endfor %}
+    <div>
+    <br>
+    <br>
+    <br>
+{% endfor %}
+
+{% endblock %}

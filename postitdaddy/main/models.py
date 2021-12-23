@@ -6,6 +6,7 @@ from tinymce.models import HTMLField
 from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
+from django.shortcuts import reverse
 # Create your models here.
 User = get_user_model()
 
@@ -60,3 +61,8 @@ class Thread(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_url(self):
+        return reverse("detail", kwargs = {
+            "slug" : self.slug
+        })

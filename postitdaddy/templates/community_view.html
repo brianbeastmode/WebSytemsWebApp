@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+{% block content %}
+
+{% for thread in threads%}
+    <h1>thread title : {{thread.title}} </h1>
+    <h3>thread community: {{thread.community}} </h1>
+
+
+{% endfor %}
+
+
+{% endblock %}
