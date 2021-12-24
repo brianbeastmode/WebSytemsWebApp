@@ -8,6 +8,7 @@
 <h1>Communities: </h1>
 {% for community in comms %}
     {{community.title}} : <a href={% url 'community_view' community.slug %}>Click me!<a/>
+    number of threads: {{community.num_threads}}
     <br>
 
 {% endfor %}
@@ -22,7 +23,7 @@
 
 <div class="card">
     <div class="card-body">
-        <h1>POST TITLE: {{thread.title}}</h1> <a href="{% url 'view_thread' thread.slug %}">Click me!</a>
+        <a href="{{thread.get_url}}"><h1>POST TITLE: {{thread.title}}</h1></a> <a href="{% url 'view_thread' thread.slug %}">Click me!</a>
         <h1>POSTED BY: {{thread.user}}</h1>
         <h1>POST CONTENT: {{thread.content|safe}}</h1>
         <h1>POST TAGS: 

@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>{{threads.title}}</h1>
-<h1>{{threads.content}}</h1>
+<h1>{{threads.content|safe}}</h1>
 <h1>{{threads.user}}</h1>
 <h2>Read times: {% get_hit_count for threads %}</h2>
 <br>

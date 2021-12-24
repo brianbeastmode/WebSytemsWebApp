@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Thread, Community, UserProfile
+from .models import Thread, Community, UserProfile, Comment, Reply
 from .utils import update_views
 # Create your views here.
 

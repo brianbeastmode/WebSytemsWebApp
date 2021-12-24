@@ -37,18 +37,40 @@ class Community(models.Model):
 
     def __str__(self):
         return self.title
-
+        
     class Meta:
         verbose_name_plural = 'Communities'  
+
+    @property
+    def num_threads(self):
+        return Thread.objects.filter(community=self).count()
+
+class Reply(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    content = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content[:100]
+    class Meta:
+        verbose_name_plural = 'Replies' 
+
+class Comment(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    content = models.TextField()
+    reply = models.ManyToManyField(Reply, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.contet[:100]
 
 class Thread(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    content = HTMLField()
-    community = models.ManyToManyField(Community,)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
     tags = TaggableManager()
-    votes = models.ManyToManyField(User, related_name='postVoter')
+    comment = models.ManyToManyField(Reply, blank=True)
+    votes = models.ManyToManyField(User, blank=True,  related_name='postVoter')
     date = models.DateTimeField(auto_now_add=True)
     hit_count_generic = GenericRelation(
     HitCount, object_id_field='object_pk',
@@ -63,6 +85,29 @@ class Thread(models.Model):
         return self.title
     
     def get_url(self):
-        return reverse("detail", kwargs = {
+        return reverse("view_thread", kwargs = {
             "slug" : self.slug
         })
+    
+    @property
+    def num_comments(self):
+        return self.comment.count()
+
+def addThread(request):
+    submitted = False
+
+    if request.method == 'POST':
+        form = ThreadForm(request.POST)
+        if form.is_valid():
+            user = UserProfile.objects.get(user=request.user)
+            newform = form.save(commit=False)
+            newform.user = user
+            newform.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/?submitted=True')
+    
+    form = ThreadForm
+    context = {
+        'form' : form
+    }
+    return render(request, 'add_post.html', context)
