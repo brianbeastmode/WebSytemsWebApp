@@ -30,3 +30,23 @@ def community_view(request, slug):
         'threads' : threads,
     }
     return render(request, "community_view.html", context)
+
+
+def addThread(request):
+    submitted = False
+
+    if request.method == 'POST':
+        form = ThreadForm(request.POST)
+        if form.is_valid():
+            user = UserProfile.objects.get(user=request.user)
+            newform = form.save(commit=False)
+            newform.user = user
+            newform.save()
+            form.save_m2m()
+            return HttpResponseRedirect('/?submitted=True')
+    
+    form = ThreadForm
+    context = {
+        'form' : form
+    }
+    return render(request, 'add_post.html', context)

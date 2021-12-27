@@ -4,7 +4,7 @@
 
 {% for thread in threads%}
     <h1>thread title : {{thread.title}} </h1>
-    <h3>thread community: {{thread.community}} </h1>
+    <h3>thread community: {{thread.community.all.0}} </h1>
     <h5>read times: {% get_hit_count for thread %}</h5>
     <h5>Date : {{thread.date|date:"d/m/y fA"}}</h5>
 
