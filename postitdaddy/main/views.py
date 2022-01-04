@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Thread, Community, UserProfile, Comment, Reply
+from .forms import ThreadForm
 from .utils import update_views
 # Create your views here.
 
@@ -11,16 +12,16 @@ def home(request):
         'threads': thread,
         'comms' : comms,
     }
-    return render(request, "home.html", context)
+    return render(request, "index.html", context)
 
 def view_thread(request, slug):
     threads = get_object_or_404(Thread, slug=slug)
 
     update_views(request, threads)
     context = {
-        'threads' : threads,
+        'thread' : threads,
     }
-    return render(request, "view_post.html", context)
+    return render(request, "view.html", context)
 
 def community_view(request, slug):
     community = get_object_or_404(Community, slug=slug)
@@ -33,7 +34,6 @@ def community_view(request, slug):
 
 
 def addThread(request):
-    submitted = False
 
     if request.method == 'POST':
         form = ThreadForm(request.POST)

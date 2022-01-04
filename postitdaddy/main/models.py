@@ -47,7 +47,7 @@ class Comment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.contet[:100]
+        return self.content[:100]
 
 class Community(models.Model):
     title = models.CharField(max_length=50)
@@ -72,6 +72,7 @@ class Community(models.Model):
 class Thread(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
+    content = HTMLField(blank=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
     tags = TaggableManager()
     comment = models.ManyToManyField(Reply, blank=True)
@@ -80,7 +81,7 @@ class Thread(models.Model):
     hit_count_generic = GenericRelation(
     HitCount, object_id_field='object_pk',
     related_query_name='hit_count_generic_relation')
-    community = models.ManyToManyField(Community)
+    community = models.ForeignKey(Community,  on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.slug:
