@@ -28,8 +28,6 @@ class UserProfile(models.Model):
 
 
 
-
-
 class Reply(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     content = models.TextField()
@@ -75,7 +73,7 @@ class Thread(models.Model):
     content = HTMLField(blank=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
     tags = TaggableManager()
-    comment = models.ManyToManyField(Reply, blank=True)
+    comment = models.ManyToManyField(Comment)
     votes = models.ManyToManyField(User, blank=True,  related_name='postVoter')
     date = models.DateTimeField(auto_now_add=True)
     hit_count_generic = GenericRelation(

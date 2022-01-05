@@ -6,7 +6,7 @@
     <!-- Start of BODY -->
     <div id="main-container">
         <div class="row" id="body-container">
-            <div class="col-9" id="left-body">
+            <div class="col-10" id="left-body">
               
               {% for thread in threads %}
               <div onclick="location.href='{% url 'view_thread' thread.slug %}';" class="row card-thread-container">
@@ -60,7 +60,7 @@
               
 
               
-            <div class="col-3 " id="right-body">
+            <div class="col-2 " id="right-body">
               <div class="card-links-container sticky-top">
                 <div class="card-links-right row">
                   <h1>About</h1>

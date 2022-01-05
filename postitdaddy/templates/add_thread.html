@@ -2,10 +2,15 @@
 
 
 {% block content %}
-
-
-
-
+<br>
+<br>
+<br>
+<br>
+<form action="{% url 'add_thread' %}" method='POST' >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Submit">
+</form>
 
 
 
