@@ -1,16 +1,18 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Thread, Community, UserProfile, Comment, Reply
-from .forms import ThreadForm
+from .forms import ThreadForm, CommunityForm
 from .utils import update_views
 # Create your views here.
 
 def home(request):
     thread = Thread.objects.all()
     comms = Community.objects.all()
+    commForm = CommunityForm 
 
     context = {
         'threads': thread,
         'comms' : comms,
+        'commForm' : commForm,
     }
     return render(request, "index.html", context)
 
@@ -50,7 +52,6 @@ def addThread(request):
     if request.method == 'POST':
         form = ThreadForm(request.POST or None)
         if form.is_valid():
-            print('form is valid!')
             user = UserProfile.objects.get(user=request.user)
             newform = form.save(commit=False)
             newform.user = user
@@ -63,3 +64,12 @@ def addThread(request):
         'form' : form
     }
     return render(request, 'add_thread.html', context)
+
+def addCommunity(request):
+
+    if request.method == 'POST':
+        form = CommunityForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    form = CommunityForm  

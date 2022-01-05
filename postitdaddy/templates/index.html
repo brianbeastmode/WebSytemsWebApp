@@ -7,7 +7,7 @@
     <div id="main-container">
         <div class="row" id="body-container">
             <div class="col-10" id="left-body">
-              
+              <!-- Start of Post loop -->
               {% for thread in threads %}
               <div onclick="location.href='{% url 'view_thread' thread.slug %}';" class="row card-thread-container">
                 <div class="card-thread-main">
@@ -53,15 +53,14 @@
                     </div>
                 </div>
                 {% endfor %}
+                <!-- End of Post loop -->
+
               </div>
 
-              
-
-              
-
-              
+            <!-- Right Side About Links -->
             <div class="col-2 " id="right-body">
               <div class="card-links-container sticky-top">
+                 <!-- First Box -->
                 <div class="card-links-right row">
                   <h1>About</h1>
                   <h1>Content Policy</h1>
@@ -70,12 +69,43 @@
                 <div class="card-links-right row" id="copyright-text">
                   <h1>Post it Daddy Inc © 2021 . All rights reserved</h1>
                 </div>
+                <!-- Second Box -->
+                <div class="card-links-container sticky-top ">
+                  <div class="card-links-right row">
+                    <a href="{% url 'add_thread' %}"><h1>Create Post</h1></a>
+                    <a data-toggle="modal" data-target="#createCommunityModal"><h1>Create Community</h1></a>
+  
+                  </div>
+                </div>
+
               </div>
             </div>
+            <!-- End of Right Side About Links -->
         </div>
     </div>
 
-
+<!-- Create Community Modal -->
+<div class="modal fade" id="createCommunityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Community</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'add_community' %}" method="post">
+          {% csrf_token %}
+          {{commForm.as_p}}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="Submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Create Community Modal -->
 
 
     <!-- END of BODY -->

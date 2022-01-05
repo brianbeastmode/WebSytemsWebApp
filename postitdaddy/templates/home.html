@@ -1,44 +1,17 @@
 {% extends 'base.html' %}
-<title>Post it Daddy!</title>
-
 
 
 {% block content %}
-
-<h1>Communities: </h1>
-{% for community in comms %}
-    {{community.title}} : <a href={% url 'community_view' community.slug %}>Click me!<a/>
-    number of threads: {{community.num_threads}}
-    <br>
-
-{% endfor %}
-
-{% if messages %}
-    {% for message in messages %}
-        <p class="alert alert-info">{{ message }}</p>
-    {% endfor %}
-{% endif %}
-
-{% for thread in threads %}
-
-<div class="card">
-    <div class="card-body">
-        <a href="{{thread.get_url}}"><h1>POST TITLE: {{thread.title}}</h1></a> <a href="{% url 'view_thread' thread.slug %}">Click me!</a>
-        <h1>POSTED BY: {{thread.user}}</h1>
-        <h1>POST CONTENT: {{thread.content|safe}}</h1>
-        <h1>POST TAGS: 
-            <h1>{% for tags in thread.tags.all %}
-                {{tags.tagName}}
-            {% endfor%}<h1>
-        </h1>
-        <h1>DATE: {{thread.date}}</h1>
-       
-    </div>
-</div>
-
-{% endfor %}
+<br>
+<br>
+<br>
+<br>
+<form action="{% url 'add_thread' %}" method='POST' >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Submit">
+</form>
 
 
 
-{% endblock content %}
-
+{% endblock %}

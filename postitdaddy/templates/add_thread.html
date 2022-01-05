@@ -1,17 +1,119 @@
 {% extends 'base.html' %}
 
 
+
 {% block content %}
-<br>
-<br>
-<br>
-<br>
-<form action="{% url 'add_thread' %}" method='POST' >
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
-</form>
+    <!-- Start of BODY -->
+    <div id="main-container">
+        <div class="row" id="body-container">
+            <div class="col-10" id="left-body">
+                <!-- Start of Create Post -->
+                <div class="row">
+                    <h5>Create Post</h5>
+                </div>
+
+                <div>
+                    <h5>Choose a community: {{form.community}}</h5>
+                </div>
+                
+                <div>
+                    <!-- Text or image selector -->
+                    <div>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+                        
+                    </div>
+                    <!-- Form Body -->
+                    <div>
+                        <!-- Collapse for TEXT post -->
+                        <div class="collapse show in    
+                         
+                         
+                                                 multi-collapse" id="multiCollapseExample1">
+                            <div class="card card-body">
+                              Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                            </div>
+                        </div>
+                        <!-- Collapse for IMAGE post -->
+                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+                            <div class="card card-body">
+                              Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Create Post -->
+
+              </div>
+
+            <!-- Right Side About Links -->
+            <div class="col-2 " id="right-body">
+              <div class="card-links-container sticky-top">
+                 <!-- First Box -->
+                <div class="card-links-right row">
+                  <h1>About</h1>
+                  <h1>Content Policy</h1>
+                  <h1>Privacy Policy</h1>
+                </div>
+                <div class="card-links-right row" id="copyright-text">
+                  <h1>Post it Daddy Inc © 2021 . All rights reserved</h1>
+                </div>
+                <!-- Second Box -->
+                <div class="card-links-container sticky-top ">
+                  <div class="card-links-right row">
+                    <a href="{% url 'add_thread' %}"><h1>Create Post</h1></a>
+                    <a data-toggle="modal" data-target="#createCommunityModal"><h1>Create Community</h1></a>
+  
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- End of Right Side About Links -->
+        </div>
+    </div>
+
+<!-- Create Community Modal -->
+<div class="modal fade" id="createCommunityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Community</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'add_community' %}" method="post">
+          {% csrf_token %}
+          {{commForm.as_p}}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="Submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Create Community Modal -->
+
+
+<!-- END of BODY -->
+    
+    
+
+
+    
 
 
 
+    <script>
+        $(document).on('click',function(){
+            $('.collapse').collapse('hide');
+        })
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
