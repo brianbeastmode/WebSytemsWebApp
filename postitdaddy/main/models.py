@@ -70,10 +70,11 @@ class Community(models.Model):
 class Thread(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    content = HTMLField(blank=True)
+    content = HTMLField(blank=True, default=None, null=True)
+    image = ResizedImageField(size=[50,80], quality=100, upload_to="post_image", default=None, null=True, blank=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
     tags = TaggableManager()
-    comment = models.ManyToManyField(Comment)
+    comment = models.ManyToManyField(Comment, blank=True,)
     votes = models.ManyToManyField(User, blank=True,  related_name='postVoter')
     date = models.DateTimeField(auto_now_add=True)
     hit_count_generic = GenericRelation(

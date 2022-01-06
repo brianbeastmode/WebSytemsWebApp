@@ -12,32 +12,43 @@
                     <h5>Create Post</h5>
                 </div>
 
-                <div>
-                    <h5>Choose a community: {{form.community}}</h5>
-                </div>
-                
-                <div>
+                <div id="myGroup">
                     <!-- Text or image selector -->
                     <div>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+                        <a class="btn btn-primary"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapsePost" role="button" aria-expanded="false" aria-controls="multiCollapsePost">Post</a>
+                        <a class="btn btn-primary"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapseImage" role="button" aria-expanded="false" aria-controls="multiCollapseImage">Image</a>
                         
                     </div>
                     <!-- Form Body -->
                     <div>
                         <!-- Collapse for TEXT post -->
-                        <div class="collapse show in    
-                         
-                         
-                                                 multi-collapse" id="multiCollapseExample1">
+                        <div class="collapse show in multi-collapse" id="multiCollapsePost" data-parent="#myGroup">
                             <div class="card card-body">
-                              Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                              <form action="{% url 'add_thread' %}" method="post">
+                                {% csrf_token %}
+                                <h4>Choose Community: {{form.community}}</h4>
+                                <h5>Title: {{form.title}}</h5>
+                                <h5>Content: </h5>
+                                {{form.content}}
+                                <h5>Tags: {{form.tags}}</h5>
+
+                                <button type="Submit" name="text-post" class="btn btn-primary">Submit</button>
+                              </form>
                             </div>
                         </div>
                         <!-- Collapse for IMAGE post -->
-                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <div class="collapse multi-collapse" id="multiCollapseImage" data-parent="#myGroup">
                             <div class="card card-body">
-                              Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                              <form action="{% url 'add_thread' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <h4>Choose Community: {{form.community}}</h4>
+                                <h5>Title: {{form.title}}</h5>
+                                <h5>Choose image: {{form.image}}</h5>
+                                <h5>Tags: {{form.tags}}</h5>
+
+                                <button type="Submit" name="image-post" class="btn btn-primary">Submit</button>
+                              </form>
                             </div>
                         </div>
                     </div>
@@ -107,9 +118,7 @@
 
 
     <script>
-        $(document).on('click',function(){
-            $('.collapse').collapse('hide');
-        })
+
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

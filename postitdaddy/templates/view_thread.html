@@ -35,7 +35,7 @@
                     {% if thread.content %}
                     <h5>{{ thread.content|safe}}</h5> 
                     {% else %}
-                    <img class="col align-self-center"src="./11eafda458a8ef7643aea552e763e321b1dafa18r1-1081-1113v2_128.jpg" alt="image">
+                    <img class="col align-self-center" src="{{ thread.image.url }}" alt="image">
                     {% endif %}
                   </div>
 

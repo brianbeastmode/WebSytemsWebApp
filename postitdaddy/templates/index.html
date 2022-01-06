@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 
 {% block content %}
@@ -31,10 +31,10 @@
                   </div>
 
                   <div class="thread-mid-content row">
-                    {% if thread.content %}
-                    <h5>{{ thread.content|safe|truncatechars:300 }}</h5> 
+                    {% if thread.image %}
+                    <img class="col align-self-center" src="{{ thread.image.url }}" alt="image">
                     {% else %}
-                    <img class="col align-self-center"src="./11eafda458a8ef7643aea552e763e321b1dafa18r1-1081-1113v2_128.jpg" alt="image">
+                    <h5>{{ thread.content|safe|truncatechars:300 }}</h5> 
                     {% endif %}
                   </div>
 

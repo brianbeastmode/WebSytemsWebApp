@@ -49,15 +49,27 @@ def community_view(request, slug):
 
 def addThread(request):
 
-    if request.method == 'POST':
+    if "text-post" in request.POST:
         form = ThreadForm(request.POST or None)
         if form.is_valid():
+            print('valid ra sya')
             user = UserProfile.objects.get(user=request.user)
             newform = form.save(commit=False)
             newform.user = user
             newform.save()
             form.save_m2m()
-            return redirect("home")
+            return redirect(home)
+    
+    if "image-post" in request.POST:
+        form = ThreadForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            print(form.cleaned_data.get("image"))
+            user = UserProfile.objects.get(user=request.user)
+            newform = form.save(commit=False)
+            newform.user = user
+            newform.save()
+            form.save_m2m()
+            return redirect(home)
 
     form = ThreadForm
     context = {

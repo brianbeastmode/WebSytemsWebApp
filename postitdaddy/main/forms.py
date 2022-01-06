@@ -7,7 +7,7 @@ from .models import Thread, Community
 class ThreadForm(ModelForm):
     class Meta:
         model = Thread
-        fields = ('title', 'content', 'tags', 'community')
+        fields = ('title', 'content', 'tags', 'image', 'community', )
 
 class CommunityForm(ModelForm):
     class Meta:
