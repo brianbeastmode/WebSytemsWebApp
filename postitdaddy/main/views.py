@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Thread, Community, UserProfile, Comment, Reply
+from .models import Thread, Community, User, UserProfile, Comment, Reply
 from .forms import ThreadForm, CommunityForm
 from .utils import update_views
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     thread = Thread.objects.all()
     comms = Community.objects.all()
-    commForm = CommunityForm 
+    commForm = CommunityForm
 
     context = {
         'threads': thread,
@@ -15,7 +16,8 @@ def home(request):
         'commForm' : commForm,
     }
     return render(request, "index.html", context)
-
+    
+@login_required
 def view_thread(request, slug):
     threads = get_object_or_404(Thread, slug=slug)
     userProfile = UserProfile.objects.get(user=request.user)
@@ -46,7 +48,7 @@ def community_view(request, slug):
     }
     return render(request, "community_view.html", context)
 
-
+@login_required
 def addThread(request):
 
     if "text-post" in request.POST:
@@ -58,7 +60,7 @@ def addThread(request):
             newform.user = user
             newform.save()
             form.save_m2m()
-            return redirect(home)
+            return redirect("home")
     
     if "image-post" in request.POST:
         form = ThreadForm(request.POST or None, request.FILES or None)
@@ -69,14 +71,15 @@ def addThread(request):
             newform.user = user
             newform.save()
             form.save_m2m()
-            return redirect(home)
+            return redirect("home")
 
     form = ThreadForm
     context = {
         'form' : form
     }
     return render(request, 'add_thread.html', context)
-
+    
+@login_required
 def addCommunity(request):
 
     if request.method == 'POST':

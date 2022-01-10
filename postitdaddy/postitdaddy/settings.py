@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'users.apps.UsersConfig',
 
     'tinymce',
     'taggit',
@@ -57,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processorts.context_hehe',
             ],
         },
     },
@@ -120,14 +122,15 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #book cover destination folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'signin'
 LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'home'
+
+DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]

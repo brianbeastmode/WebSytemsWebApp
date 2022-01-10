@@ -26,29 +26,44 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn my-2 my-sm-0" id="search-button" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Login<span class="sr-only"></span></a>
+          {% if not user.is_authenticated %}
+          <li class="nav-item" id="login-button-navbar">
+            <a class="nav-link buttons-user" data-toggle="modal" data-target="#loginModal">Login<span class="sr-only"></span></a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Signup<span class="sr-only"></span></a>
+          <li class="nav-item" id="signup-button-navbar">
+            <a class="nav-link buttons-user" data-toggle="modal" data-target="#signupModal">Signup<span class="sr-only"></span></a>
           </li>
+          {% else %}
+          <li class="nav-item" id="navbar-username">
+            <h5 class="nav-link">Hi, {{ user.username }}!</h5>
+          </li>
+          <li class="nav-item" id="signup-button-navbar">
+            <a class="nav-link buttons-user" href="{% url 'logout' %}">Logout<span class="sr-only"></span></a>
+          </li>
+          {% endif %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdowns" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Username
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdowns">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle nav-user-button" data-toggle="dropdown" data-display="static" aria-expanded="false">
+                <img  id="nav-user-image"  src="{% static 'svg/person-circle.svg' %}" alt=""> 
+              </button>
+              <div class="dropdown-menu dropdown-menu-lg-right">
+                <a class="dropdown-item" href="#" type="button">Links</aa>
+                <a class="dropdown-item" href="#" type="button">Here</a>
+                {% if not user.is_authenticated %}
+                <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" type="button">Login</a>
+                <a class="dropdown-item" data-toggle="modal" data-target="#signupModal" type="button">Signup</a>
+                {% else %}
+                <a class="dropdown-item" href="{% url 'logout' %}" type="button">Logout</a>
+                {% endif %}
+              </div>
             </div>
           </li>
         </ul>
@@ -59,6 +74,60 @@
 
     <!-- Start of BODY -->
 
+
+    <!-- Modal  for LOGIN-->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'signin' %}" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="text1">Username</label>
+                <input type="text" name="username" class="form-control" id="text1" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal  for SIGNUP-->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">Signup</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'signup' %}" method="post">
+              {% csrf_token %}
+              {{userCreationForm.as_p}}
+
+              <button type="button " class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Signup</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- END of BODY -->
     

@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     bio = HTMLField()
     slug = models.SlugField(max_length=400, unique=True, blank=True)
     points = models.IntegerField(default=0)
-    profile_pic = ResizedImageField(size=[50,80], quality=100, upload_to="user_pic", default=None, null=True, blank=True)
+    profile_pic = ResizedImageField(size=[50,50], quality=100, upload_to="user_pic", default=None, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -71,7 +71,7 @@ class Thread(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
     content = HTMLField(blank=True, default=None, null=True)
-    image = ResizedImageField(size=[50,80], quality=100, upload_to="post_image", default=None, null=True, blank=True)
+    image = ResizedImageField(quality=100, upload_to="post_image", default=None, null=True, blank=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  
     tags = TaggableManager()
     comment = models.ManyToManyField(Comment, blank=True,)
