@@ -12,6 +12,15 @@ html, body{
     display: flex;
     flex-flow: column;
     margin-top: 60px;
+  
+}
+
+#main-container-add-thread{
+  background-color: #2f2f2f2f!important;
+  display: flex;
+  flex-flow: column;
+  margin-top: 60px;
+  min-height: 100vh;
 
 }
 
@@ -212,6 +221,7 @@ html, body{
   display: flex;
   flex-flow: column;
   margin-top: 60px;
+  min-height:100vh;
 }
 
 #body-container-post{
@@ -343,6 +353,119 @@ html, body{
   font-size: .8rem;
   color: #777777;
 }
+
+.dropdown-button-post-container{
+  background: white!important;
+}
+
+.dropdown-button-post {
+  margin: 0!important;
+  padding: 0!important;
+  height: 50px;
+  width: 120px;
+  padding: 12px 0px!important;
+  background: none!important; 
+  border: none!important; 
+  color: #777777!important; 
+}
+
+.dropdown-button-post:focus{
+  outline: none !important;
+  box-shadow: none;
+  border-bottom: #0d6efd 4px solid!important;
+  border-radius: 0!important;
+  color: #0d6efd!important;
+  
+}
+
+.center-image img{
+  padding: 0!important;
+  margin-left: 0!important; 
+  margin-right: auto!important;
+  background: #000;
+}
+
+.width-max {
+  width: 100%;
+}
+
+.dropdown-button-post img{
+  margin-right: 8px;
+  filter: invert(47%) sepia(0%) saturate(2608%) hue-rotate(8deg) brightness(99%) contrast(82%);
+}
+
+.dropdown-button-post:focus img{
+  margin-right: 8px;
+  filter: invert(36%) sepia(67%) saturate(6082%) hue-rotate(211deg) brightness(103%) contrast(99%);
+}
+
+.create-post-caption {
+  margin: 0rem!important;
+  margin-top: 1rem!important;
+  margin-bottom: 2rem!important;
+}
+
+.create-post-caption h5{
+  color: #4b4a4a!important; 
+}
+
+.comm-form-buttons{
+  margin-top:20px!important;
+}
+
+.card-links-right-two{
+  margin-top: 10rem;
+  background: #000!important;
+}
+
+.create-community-post{
+  margin-top: 10px;
+  border-top: solid 1px rgb(202, 202, 202)!important;
+}
+
+.create-community-post-buttons{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.create-community-post-button{
+  border: 1px solid#0d6efd;
+  border-radius: 20px!important;
+  font-size: .9rem!important;
+  font-weight: 510!important;
+  padding: 10px;
+  width: 100%;
+  height: 40px!important;
+}
+
+#create-post-button-cm:hover{
+  background: white;
+  color: #0d6efd;
+}
+
+#create-comm-button-cm{
+  background: white;
+  color: #0d6efd;
+}
+
+#create-comm-button-cm:hover{
+  background: #0d6efd;
+  color: white;
+}
+
+.communities-right-box{
+  border-top: solid 1px rgb(202, 202, 202)!important;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
 
 
 

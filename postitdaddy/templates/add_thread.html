@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 
 {% block content %}
     <!-- Start of BODY -->
-    <div id="main-container">
+    <div id="main-container-add-thread">
         <div class="row" id="body-container">
             <div class="col-10" id="left-body">
                 <!-- Start of Create Post -->
-                <div class="row">
+                <div class="row create-post-caption">
                     <h5>Create Post</h5>
                 </div>
 
                 <div id="myGroup">
                     <!-- Text or image selector -->
-                    <div>
-                        <a class="btn btn-primary"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapsePost" role="button" aria-expanded="false" aria-controls="multiCollapsePost">Post</a>
-                        <a class="btn btn-primary"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapseImage" role="button" aria-expanded="false" aria-controls="multiCollapseImage">Image</a>
+                    <div class="dropdown-button-post-container">
+                        <a class="btn btn-primary dropdown-button-post"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapsePost" role="button" aria-expanded="false" aria-controls="multiCollapsePost"><img src="{% static 'svg/card-text.svg' %}" alt="">Post</a>
+                        <a class="btn btn-primary dropdown-button-post"  data-parent="#myGroup" data-toggle="collapse" href="#multiCollapseImage" role="button" aria-expanded="false" aria-controls="multiCollapseImage"><img src="{% static 'svg/image.svg' %}" alt="">Image</a>
                         
                     </div>
                     <!-- Form Body -->
                     <div>
                         <!-- Collapse for TEXT post -->
-                        <div class="collapse show in multi-collapse" id="multiCollapsePost" data-parent="#myGroup">
+                        <div class="collapse in multi-collapse " id="multiCollapsePost" data-parent="#myGroup">
                             <div class="card card-body">
                               <form action="{% url 'add_thread' %}" method="post">
                                 {% csrf_token %}
@@ -32,7 +33,7 @@
                                 {{form.content}}
                                 <h5>Tags: {{form.tags}}</h5>
 
-                                <button type="Submit" name="text-post" class="btn btn-primary">Submit</button>
+                                <button type="Submit" name="text-post" class="btn btn-primary mt-3 float-right">Submit</button>
                               </form>
                             </div>
                         </div>
@@ -47,7 +48,7 @@
                                 <h5>Choose image: {{form.image}}</h5>
                                 <h5>Tags: {{form.tags}}</h5>
 
-                                <button type="Submit" name="image-post" class="btn btn-primary">Submit</button>
+                                <button type="Submit" name="image-post" class="btn btn-primary mt-3 float-right">Submit</button>
                               </form>
                             </div>
                         </div>
@@ -84,28 +85,7 @@
         </div>
     </div>
 
-<!-- Create Community Modal -->
-<div class="modal fade" id="createCommunityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create Community</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{% url 'add_community' %}" method="post">
-          {% csrf_token %}
-          {{commForm.as_p}}
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="Submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End of Create Community Modal -->
+
 
 
 <!-- END of BODY -->

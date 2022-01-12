@@ -34,8 +34,12 @@
                   <div class="thread-mid-content row">
                     {% if thread.content %}
                     <h5>{{ thread.content|safe}}</h5> 
+                    {% elif thread.image %}
+                    <div class="width-max center-image">
+                      <img class="col align-self-center " src="{{ thread.image.url }}" alt="image">
+                    </div>
                     {% else %}
-                    <img class="col align-self-center" src="{{ thread.image.url }}" alt="image">
+                    
                     {% endif %}
                   </div>
 
