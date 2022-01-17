@@ -200,19 +200,24 @@ html, body{
     margin-bottom: 10px;
 }
 
-.thread-bot-comments{
+.thread-bot-elements{
     display: flex;
+    margin-right: 20px;
 }
 
-.thread-bot-comments svg{
-    margin-top: -4px;
-    margin-left: 1px;
+
+.thread-bot-elements img{
+  margin-top: -4px;
+  margin-left: 1px;
+  height: 20px;
+  width: 20px;
+  filter: invert(43%) sepia(7%) saturate(153%) hue-rotate(169deg) brightness(98%) contrast(86%);
 }
 
-.thread-bot-comments h5{
+.thread-bot-elements h5{
     font-size: .8em;
     font-weight: 600;
-    margin-left: 8px;
+    margin-left: 5px;
     color: #6e7072;
 }
 
@@ -245,6 +250,8 @@ html, body{
   font-weight: 510!important;
   cursor: pointer;
 }
+
+
 
 #login-button-navbar{
   border: 1px solid #0d6efd;
@@ -402,7 +409,7 @@ html, body{
 .create-post-caption {
   margin: 0rem!important;
   margin-top: 1rem!important;
-  margin-bottom: 2rem!important;
+  margin-bottom: 1rem!important;
 }
 
 .create-post-caption h5{
@@ -458,20 +465,73 @@ html, body{
 .communities-right-box{
   border-top: solid 1px rgb(202, 202, 202)!important;
   margin-top: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
+.communities-right-box h5{
+  color: #777777;
+}
+
+.communities-right-box li{
+  list-style: none;
+  color: #6e7072;
+}
+
+#main-container-community{
+  background-color: #2f2f2f2f!important;
+  margin-top: 30px;
+
+}
+
+#community-container-main {
+  width: 50%;
+  margin: auto;
+  background: rgb(238, 237, 237);
+  display: block;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+#comm-caption h1{
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.comms-container{
+  display: table;
+}
+
+.comms-container li{
+  list-style: none;
+}
+
+.comms-container a{
+  color: #777777;
+}
+
+#community-title-container {
+  width: 100%!important;
+  background: #0d6efd!important;
+  height: 100px;
+  position: relative;
+}
+ #community-title {
+   background: #fff;
+   color: black;
+   position: absolute;
+   bottom: 0px;
+   width: 100%!important;
+   padding-left: 180px;
+ }
 
 
-
-
-
-
-
-
-
-
-
-
+.inline-itemz{ 
+  display: inline!important;
+  
+  
+}
 
 
   @media (max-width: 500px) {

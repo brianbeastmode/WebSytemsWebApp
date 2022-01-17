@@ -7,12 +7,10 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     thread = Thread.objects.all()
-    comms = Community.objects.all()
     commForm = CommunityForm
 
     context = {
         'threads': thread,
-        'comms' : comms,
         'commForm' : commForm,
     }
     return render(request, "index.html", context)
@@ -21,6 +19,7 @@ def home(request):
 def view_thread(request, slug):
     threads = get_object_or_404(Thread, slug=slug)
     userProfile = UserProfile.objects.get(user=request.user)
+
  
     if "comment-form" in request.POST:
         comment = request.POST.get("comment")
@@ -34,17 +33,20 @@ def view_thread(request, slug):
         new_reply, created = Reply.objects.get_or_create(user=userProfile, content=reply)
         comment_obj.reply.add(new_reply.id)
 
+    update_views(request, threads)
     context = {
         'thread' : threads,
     }
     return render(request, "view_thread.html", context)
 
+@login_required
 def community_view(request, slug):
     community = get_object_or_404(Community, slug=slug)
     threads = Thread.objects.filter(community = community)
 
     context = {
         'threads' : threads,
+        'community' : community
     }
     return render(request, "community_view.html", context)
 
@@ -88,3 +90,9 @@ def addCommunity(request):
             form.save()
             return redirect("home")
     form = CommunityForm  
+
+@login_required
+def communityList(request):
+    comms = Community.objects.all()
+    
+    return render(request, 'community.html')

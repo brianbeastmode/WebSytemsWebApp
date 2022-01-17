@@ -1,14 +1,132 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load hitcount_tags %}
+
+
 {% block content %}
+    <!-- Start of BODY -->
+    <div id="main-container">
+      <div id="community-title-container">
+        <div id="community-title">
+          <h2>Community : {{community.title}}</h2>
+        </div>
+        
+      </div>
+        <div class="row" id="body-container">
+            <div class="col-8 left-body">
+              <!-- Start of Post loop -->
+              {% for thread in threads %}
+              <div onclick="location.href='{% url 'view_thread' thread.slug %}';" class="row card-thread-container">
+                <div class="card-thread-main">
+                  <div class="thread-top-caption row">
+                    <div id="top-caption-community">
+                      <a href="{% url 'community_view' thread.community.slug %}">{{thread.community}}</a>
+                    </div>
+                    <h3 id="interpunct-thread-top-caption">·</h3>
+                    <div id="top-caption-user">
+                      <h3>Posted by </h3> 
+                      <h3 ><a href="#">/{{thread.user}}</a></h3> 
+                    </div>
+                    <div id="top-caption-time">
+                      <a>{{thread.date}}</a>
+                    </div>
+                  </div>
 
-{% for thread in threads%}
-    <h1>thread title : {{thread.title}} </h1>
-    <h3>thread community: {{thread.community.all.0}} </h1>
-    <h5>read times: {% get_hit_count for thread %}</h5>
-    <h5>Date : {{thread.date|date:"d/m/y fA"}}</h5>
+                  <div class="thread-mid-title row">
+                    <h3>{{ thread.title}}
+                    </h3>
+                  </div>
 
-{% endfor %}
+                  <div class="center-image row">
+                    {% if thread.image %}
+                    <div>
+                      <img class="col align-self-center" src="{{ thread.image.url }}" alt="image">
+                    </div>
+                    {% else %}
+                    <h5>{{ thread.content|safe|truncatechars:300 }}</h5> 
+                    {% endif %}
+                  </div>
 
 
+                  <div class="thread-bot-others row">
+
+                    <div class="thread-bot-elements" > 
+                      <img src="{% static 'svg/chat-dots.svg' %}" alt="">
+                      <h5>{{thread.num_comments}} Comment/s</h5>
+                    </div>
+
+                    <div class="thread-bot-elements" > 
+                      <img src="{% static 'svg/eye.svg' %}" alt="">
+                      <h5>{% get_hit_count for thread %} Read/s</h5>
+                    </div>
+                  
+                  </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- End of Post loop -->
+
+              </div>
+
+            <!-- Right Side About Links -->
+            <div class="col-4 right-body ">
+              <div class="card-links-container sticky-top">
+                 <!-- First Box -->
+                <div class="card-links-right row">
+                  <h1>About</h1>
+                  <h1>Content Policy</h1>
+                  <h1>Privacy Policy</h1>
+                  <h1>Put</h1>
+                  <h1>Links</h1>
+                  <h1>Here</h1>
+                </div>
+
+                <!-- Second Box -->                
+
+                <div class="card-links-right row" id="copyright-text">
+                  <h1>Post it Daddy Inc © 2021 . All rights reserved</h1>
+                </div>
+
+                <!-- Buttons -->   
+                <div class="create-community-post">
+                  <div class="create-community-post-buttons">
+                    <a class="btn btn-primary create-community-post-button" id="create-post-button-cm" href="{% url 'add_thread' %}">Create Post</a>
+                  </div>
+                  <div class="create-community-post-buttons">
+                    <a class="btn btn-primary create-community-post-button" id="create-comm-button-cm" data-toggle="modal" data-target="#createCommunityModal">Create Community</a>
+                  </div>
+                </div>
+
+                <div class="communities-right-box">
+                  <a href="{% url 'community_list' %}"><h5>Communities</h5></a>
+                  <div>
+                    {% for comm in comms %}
+
+                      <a href="{% url 'community_view' comm.slug %}"><li>/{{comm}}</li></a>
+
+                    {% endfor %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+            
+            <!-- End of Right Side About Links -->
+        </div>
+    </div>
+
+
+    
+    
+
+
+    
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
